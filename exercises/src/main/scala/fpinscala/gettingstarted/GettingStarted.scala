@@ -147,9 +147,10 @@ object PolymorphicFunctions {
   // Exercise 2: Implement a polymorphic function to check whether
   // an `Array[A]` is sorted
   def isSorted[A](as: Array[A], gt: (A,A) => Boolean): Boolean = {
+    @annotation.tailrec
     def go(n: Int): Boolean = {
       if (n == as.length - 1) true
-      else if(gt(as(n + 1), as(n))) go(n + 1)
+      else if(gt(as(n), as(n + 1))) go(n + 1)
       else false
     }
     go(0)
