@@ -135,4 +135,9 @@ object List { // `List` companion object. Contains functions for creating and wo
   def filter[A](as: List[A])(f: A => Boolean): List[A] =
     foldRight(as, Nil: List[A])((a, b) => if(f(a)) Cons(a, b) else b)
 
+  def flatMap[A,B](as: List[A])(f: A => List[B]): List[B] = as match {
+    case Cons(x, xs) => append(f(x), flatMap(xs)(f))
+    case Nil => Nil
+  }
+
 }
