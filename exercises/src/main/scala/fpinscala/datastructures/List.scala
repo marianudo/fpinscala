@@ -140,4 +140,6 @@ object List { // `List` companion object. Contains functions for creating and wo
     case Nil => Nil
   }
 
+  def flatMap1[A,B](as: List[A])(f: A => List[B]): List[B] = concat(map(as)(f))
+
 }
