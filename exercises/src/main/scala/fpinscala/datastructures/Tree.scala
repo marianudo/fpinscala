@@ -6,6 +6,17 @@ case class Branch[A](left: Tree[A], right: Tree[A]) extends Tree[A]
 
 
 object Tree {
+  val treeFixture = Branch(
+     Branch(
+       Leaf(1),
+       Leaf(2)
+     ),
+     Branch(
+       Leaf(3),
+       Leaf(4)
+     )
+  )
+
   def size[A](t: Tree[A]): Int = t match {
     case Leaf(_) => 1
     case Branch(l, r) => size(l) + size(r) + 1
