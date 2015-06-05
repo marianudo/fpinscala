@@ -5,7 +5,7 @@ trait Stream[+A] {
 
   def foldRight[B](z: => B)(f: (A, => B) => B): B = // The arrow `=>` in front of the argument type `B` means that the function `f` takes its second argument by name and may choose not to evaluate it.
     this match {
-      case Cons(h,t) => f(h(), t().foldRight(z)(f)) // If `f` doesn't evaluate its second argument, the recursion never occurs.
+      case Cons(h,t) => { println(s"f($h, $t.fR($z)($f))"); f(h(), t().foldRight(z)(f))} // If `f` doesn't evaluate its second argument, the recursion never occurs.
       case _ => z
     }
 
@@ -33,7 +33,8 @@ trait Stream[+A] {
     case _ => empty
   }
 
-  def forAll(p: A => Boolean): Boolean = sys.error("todo")
+  def forAll[B](p: A => Boolean): Boolean =
+    this.foldRight(true)((a, b) => p(a) && b)
 
   def headOption: Option[A] = sys.error("todo")
 
