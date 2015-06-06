@@ -107,4 +107,7 @@ object Stream {
 
     go(0, 1)
   }
+
+  def fibsViaUnfold: Stream[Int] =
+    unfold((0,1))(tuple => Some((tuple._1, (tuple._2, tuple._2 + tuple._1))))
 }
