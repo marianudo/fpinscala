@@ -89,4 +89,7 @@ object Stream {
     case Empty => Nil
     case Cons(h, t) => h() :: toList[A](t())
   }
+
+  def constant[A](a: A): Stream[A] =
+    cons(a, constant(a))
 }
