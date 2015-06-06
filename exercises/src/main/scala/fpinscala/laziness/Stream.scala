@@ -85,7 +85,13 @@ object Stream {
   def from(n: Int): Stream[Int] =
     cons(n, from(n+1))
 
-  def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] = sys.error("todo")
+  def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] = {
+    val frs = f(z)
+    frs match {
+      case Some((a, s)) => cons(a, unfold(s)(f))
+      case None => empty[A]
+    }
+  }
 
   def toList[A](s: Stream[A]): List[A] = s match {
     case Empty => Nil
