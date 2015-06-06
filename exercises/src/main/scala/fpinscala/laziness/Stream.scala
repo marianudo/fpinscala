@@ -62,6 +62,12 @@ trait Stream[+A] {
     case Cons(h, t) => h() :: t().toList
     case Empty => Nil
   }
+
+  def mapViaUnfold[B](f: A => B): Stream[B] =
+    unfold(this) {
+      case Cons(h, t) => Some((f(h()), t()))
+      case _ => None
+    }
 }
 
 case object Empty extends Stream[Nothing]
