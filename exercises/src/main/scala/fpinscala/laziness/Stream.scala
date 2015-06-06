@@ -110,4 +110,10 @@ object Stream {
 
   def fibsViaUnfold: Stream[Int] =
     unfold((0,1))(tuple => Some((tuple._1, (tuple._2, tuple._2 + tuple._1))))
+
+  def fromViaUnfold(n: Int): Stream[Int] =
+    unfold(n)(i => Some((i, i + 1)))
+
+  def constantViaUnfold(n: Int): Stream[Int] =
+    unfold(n)(i => Some((i, i)))
 }
