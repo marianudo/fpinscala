@@ -88,8 +88,11 @@ object Monoid {
     }
   }
 
-  def ordered(ints: IndexedSeq[Int]): Boolean =
-    sys.error("todo")
+  def ordered(ints: IndexedSeq[Int]): Boolean = ???
+    //foldMapV(ints, new Monoid[Int] {
+    //  def op(i1: Int, i2: Int) = if(i1 < i2) 1 else 0
+    //  val zero = 1
+    //})((a: Int) => a)
 
   sealed trait WC
   case class Stub(chars: String) extends WC
