@@ -95,11 +95,15 @@ object Monoid {
   case class Stub(chars: String) extends WC
   case class Part(lStub: String, words: Int, rStub: String) extends WC
 
-  def par[A](m: Monoid[A]): Monoid[Par[A]] =
-    sys.error("todo")
+  def par[A](m: Monoid[A]): Monoid[Par[A]] = new Monoid[Par[A]] {
+    def zero = Par.unit(m.zero)
+    def op(a: Par[A], b: Par[A]) = a.map2(b)(m.op)
+  }
 
-  def parFoldMap[A,B](v: IndexedSeq[A], m: Monoid[B])(f: A => B): Par[B] =
-    sys.error("todo")
+  def parFoldMap[A,B](v: IndexedSeq[A], m: Monoid[B])(f: A => B): Par[B] = ???
+   //Par.parMap(v)(f).flatMap { bs =>
+   //  foldMapV(bs, par(m))(b => Par.async(b))
+   //}
 
   val wcMonoid: Monoid[WC] = sys.error("todo")
 
