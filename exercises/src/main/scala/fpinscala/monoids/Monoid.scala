@@ -129,7 +129,10 @@ object Monoid {
     }
 
   def functionMonoid[A,B](B: Monoid[B]): Monoid[A => B] =
-    sys.error("todo")
+    new Monoid[A => B] {
+      def op(a1: A => B, a2: A => B) = a => B.op(a1(a), a2(a))
+      def zero = _ => B.zero
+    }
 
   def mapMergeMonoid[K,V](V: Monoid[V]): Monoid[Map[K, V]] =
     sys.error("todo")
