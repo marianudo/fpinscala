@@ -60,7 +60,11 @@ object Monad {
       ma flatMap f
   }
 
-  val parMonad: Monad[Par] = ???
+  val parMonad: Monad[Par] = new Monad[Par] {
+    def unit[A](a: => A): Par[A] = Par.unit(a)
+    override def flatMap[A,B](ma: Par[A])(f: A => Par[B]): Par[B] =
+      Par.flatMap(ma)(f)
+  }
 
   def parserMonad[P[+_]](p: Parsers[P]): Monad[P] = ???
 
